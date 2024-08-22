@@ -3,7 +3,7 @@ import {
     List,
 } from './definitions';
 
-export async function fetchList() {
+export async function fetchList(): Promise<List[]> {
     try {
         const lists: List[] = await fetch(`${process.env.API_HOST}/lists`)
           .then((response) => response.json())
