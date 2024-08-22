@@ -6,7 +6,7 @@ export default async function Home() {
   return (
     <div>
       <p>List Name: {listArray[0].name}</p>
-      <p>List UUID: {listArray[0].uuid}</p>
+      <p>List UUID: {listArray[0].listId}</p>
       <p>List created at: {new Date(listArray[0].createdAt).toString()}</p>
       <p>List updated at: {new Date(listArray[0].updatedAt).toString()}</p>
     </div>

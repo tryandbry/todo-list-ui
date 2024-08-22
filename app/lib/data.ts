@@ -5,8 +5,8 @@ import {
 
 export async function fetchList() {
     try {
-        const exampleList = <List>({
-            uuid: randomUUID(),
+        const exampleList: List = ({
+            listId: randomUUID(),
             name: "pizza",
             createdAt:  Date.now(),
             updatedAt: Date.now()

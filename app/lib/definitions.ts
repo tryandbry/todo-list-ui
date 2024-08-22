@@ -1,16 +1,15 @@
-import { UUID } from "crypto";
-
 export type List = {
-    uuid: string;
+    listId: string;
     name: string;
     createdAt: number;
     updatedAt: number;
 };
 
 export type Item = {
-    uuid: string;
+    itemId: string;
     name: string;
     completed: boolean;
+    list: List;
     createdAt: number;
     updatedAt: number;
 };
