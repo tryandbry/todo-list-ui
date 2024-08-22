@@ -5,13 +5,15 @@ import {
 
 export async function fetchList() {
     try {
-        const exampleList: List = ({
-            listId: randomUUID(),
-            name: "pizza",
-            createdAt:  Date.now(),
-            updatedAt: Date.now()
-        })
-        return [exampleList]
+        const lists: List[] = await fetch(`${process.env.API_HOST}/lists`)
+          .then((response) => response.json())
+
+        const items: Item[] = await fetch(`${process.env.API_HOST}/items`)
+          .then((response) => response.json())
+        
+        console.log("items: ", items)
+
+          return lists
     } catch (error) {
         console.error("fetchList error: ", error)
         throw new Error('Failed to fetch list')
