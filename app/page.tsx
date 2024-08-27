@@ -1,7 +1,9 @@
 import { fetchItems, fetchList } from "./lib/data";
 import { List, Item } from "./lib/definitions";
 import ListInfo from "./list-info"
-import ItemCollection from "./item-collection";
+import ItemRow from "./item-row";
+// import ItemCollection from "./item-collection";
+import { updateItem } from "./lib/actions";
 
 export default async function Home() {
   let listId = '1a471262-5523-4410-ae6c-960bfe0772f6';
@@ -12,7 +14,12 @@ export default async function Home() {
   return (
     <div>
       <ListInfo list={list} />
-      <ItemCollection items={items} />
+      <ul>
+          {items.map((item) => (
+              <li key={item.itemId}><ItemRow item={item} updateItem={updateItem} /></li>
+          ))}
+      </ul>
+      {/* <ItemCollection items={items} /> */}
     </div>
   );
 }
