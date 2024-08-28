@@ -1,46 +1,31 @@
 'use client'
 
-import React, { useState, useRef, useTransition } from 'react'
+import { useTransition, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { Item } from "./lib/definitions"
 import { updateItem } from "./lib/actions";
+import { useDelayedFetch } from "./use-delayed-fetch"
 
 export default function ItemRow({ item }: { item: Item}) {
     const router = useRouter()
-    const [itemId, setItemId] = useState(item.itemId)
-    const [itemName, setItemName] = useState(item.name)
-    const [itemCompleted, setItemCompleted] = useState(item.completed)
-    const [isFetching, setIsFetching] = useState(false)
     const [isPending, startTransition] = useTransition()
-    const timeout = useRef<ReturnType<typeof setTimeout> | undefined>()
-
+    const transitionFn = useCallback(() => {
+        startTransition(() => {
+            router.refresh()
+        })
+    }, [router])
+    const {
+        isFetching,
+        error,
+        fetchedData: itemState,
+        setFetchedData: setItemState
+    } = useDelayedFetch(updateItem, item, transitionFn)
     const isMutating = isFetching || isPending
-
     const changeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setItemName(e.target.value)
-        clearTimeout(timeout.current)
-        timeout.current = setTimeout(async () => {
-            setIsFetching(true)
-            await updateItem({ itemId, name: e.target.value, completed: itemCompleted})
-            setIsFetching(false)
-
-            startTransition(() => {
-                router.refresh();
-            })
-        }, 3000)
+        setItemState({ ...itemState, name: e.target.value })
     }
     const changeCompleted = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setItemCompleted(!itemCompleted)
-        clearTimeout(timeout.current)
-        timeout.current = setTimeout(async () => {
-            setIsFetching(true)
-            await updateItem({ itemId, name: itemName, completed: !itemCompleted})
-            setIsFetching(false)
-
-            startTransition(() => {
-                router.refresh();
-            })
-        }, 3000)
+        setItemState({ ...itemState, completed: !itemState.completed })
     }
     return (
         <div style={{ opacity: !isMutating ? 1 : 0.7 }}>
@@ -48,15 +33,15 @@ export default function ItemRow({ item }: { item: Item}) {
                 type="text"
                 id="name"
                 name="name"
-                value={itemName}
+                value={itemState.name}
                 onChange={changeName}
             /></p>
-            <p>Item ID: {itemId}</p>
+            <p>Item ID: {itemState.itemId}</p>
             <p>Item Completed: <input
                 type="checkbox"
                 id="completed"
                 name="completed"
-                checked={itemCompleted}
+                checked={itemState.completed}
                 onChange={changeCompleted}
             /></p>
         </div>
