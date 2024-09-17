@@ -9,12 +9,13 @@ import { useListContext } from "@/app/_components/lists/ListContext"
 
 export function useItems() {
     const list = useListContext()
+    const listId = list?.listId
     const fallback: Item[] = []
 
     const { data = fallback } = useQuery({
         queryKey: [queryKeys.list, queryKeys.items],
-        queryFn: () => getItems(list.listId),
-        enabled: !!list.listId,
+        queryFn: () => getItems(listId),
+        enabled: !!listId,
     })
 
     return data
