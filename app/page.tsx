@@ -1,12 +1,13 @@
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 
 import ListHeader from "@/app/_components/lists/ListHeader"
+import Items from "@/app/_components/items/Items"
 
 export default function App() {
   return (
     <>
       <ListHeader />
-      {/* <Items /> */}
+      <Items />
       {/* <Footer /> */}
       <ReactQueryDevtools />
     </>
