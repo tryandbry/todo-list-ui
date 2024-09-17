@@ -1,11 +1,13 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
 
-export function useStateWithDelayedFetch<Type>(mutateFn: Function, initialData: Type, timeoutDuration: number) {
+export function useStateWithDelayedFetch<Type>(mutateFn: Function, initialData: Type, timeoutDelay: number) {
     const [isPending, setIsPending] = useState(false)
     const [error, setError] = useState<Error | undefined>()
     const [data, setData] = useState(initialData)
     const timeout = useRef<ReturnType<typeof setTimeout> | undefined>()
+    const timeoutDuration = useRef(timeoutDelay)
+
     useEffect(() => {
         timeout.current = setTimeout(async () => {
             setIsPending(true)
@@ -16,16 +18,21 @@ export function useStateWithDelayedFetch<Type>(mutateFn: Function, initialData: 
                 setError(new Error('failed to fetch data'))
             }
             setIsPending(false)
-        }, timeoutDuration)
+        }, timeoutDuration.current)
 
         return () => clearTimeout(timeout.current)
     }, [data, mutateFn, timeoutDuration])
+
+    const setDataWithOptions = (updatedData: Type, immediate: boolean) => {
+        timeoutDuration.current = immediate ? 0 : timeoutDelay
+        setData(updatedData)
+    }
 
     return {
         isPending,
         isError: error ? true : false,
         error,
         data,
-        setData,
+        setData: setDataWithOptions,
     }
 }

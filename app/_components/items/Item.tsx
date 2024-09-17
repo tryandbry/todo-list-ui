@@ -1,7 +1,7 @@
 import classNames from "classnames"
 import { useState } from "react"
 import type { Item as ItemType } from "@/app/_shared/types"
-import { useStateWithDelayedFetch } from "@/app/_shared/useDelayedFetch"
+import { useStateWithDelayedFetch } from "@/app/_shared/useStateWithDelayedFetch"
 import { useUpdateItem } from "./hooks/useUpdateItem"
 
 interface ItemProps {
@@ -33,15 +33,15 @@ export default function Item({ itemData }: ItemProps) {
                     onChange={(e) => setItemState({
                         ...itemState,
                         name: e.target.value,
-                    })}
+                    }, false)}
                 ></input>
                 <input type="checkbox" name="" id=""
                     className="ml-4 mr-2 h-6 w-6"
                     checked={itemState.completed}
-                    onChange={() => setItemState({
+                    onChange={(e) => setItemState({
                         ...itemState,
                         completed: !itemState.completed,
-                    })}
+                    }, true)}
                 ></input>
             </div>
         </div>
