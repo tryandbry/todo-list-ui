@@ -7,9 +7,6 @@ const ListContext = createContext<List | null>(null);
 
 export const useListContext = () => {
     const list = useContext(ListContext)
-    if (!list) {
-        throw new Error('ListContext: No value provided')
-    }
 
     return list
 }

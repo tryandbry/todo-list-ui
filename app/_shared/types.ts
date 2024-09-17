@@ -1,5 +1,5 @@
 export type List = {
-    listId: string;
+    listId?: string;
     name: string;
     createdAt?: number;
     updatedAt?: number;
