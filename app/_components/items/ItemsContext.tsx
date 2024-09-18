@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState } from "react";
 import { Item } from "@/app/_shared/types"
 import { useItems } from "./hooks/useItems"
 
-const ItemsContext = createContext<Item[] | null>(null);
+const ItemsContext = createContext<ReturnType<typeof useItems> | null>(null);
 
 export const useItemsContext = () => {
     const items = useContext(ItemsContext)
@@ -16,10 +16,10 @@ export const ItemsContextProvider = ({
 }: {
    children: React.ReactNode
 }) => {
-    const items = useItems()
+    const useItemsObject = useItems()
 
     return (
-        <ItemsContext.Provider value={ items }>
+        <ItemsContext.Provider value={ useItemsObject }>
             {children}
         </ItemsContext.Provider>
     )

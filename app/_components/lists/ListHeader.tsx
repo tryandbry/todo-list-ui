@@ -1,10 +1,13 @@
 'use client'
 
+import { useItemsContext } from "@/app/_components/items/ItemsContext"
+import { showItemsValue } from "@/app/_components/items/hooks/useItems"
 import { useListContext } from "./ListContext"
 import { List } from "@/app/_shared/types"
 
 export default function ListHeader() {
     const list: List | null = useListContext()
+    const { showItems, incrementShowItems } = useItemsContext()
 
     return (
         <div className="rounded-t-xl flex flex-col self-center bg-white shadow-xl pt-4 px-4 mx-4 w-[300px] md:w-[480px]" >
@@ -13,8 +16,11 @@ export default function ListHeader() {
                     value={list?.name}
                     className="text-l text-black font-semibold mr-2 outline-none w-full grow" 
                 ></input>
-                <button className="rounded-sm shrink-0 text-sm py-0 5 px-5 border-2 border-slate-100 text-slate-500 font-semibold hover:bg-slate-50 hover-slate-200">
-                    View All
+                <button 
+                    className="rounded-sm shrink-0 text-sm py-0 5 px-5 border-2 border-slate-100 text-slate-500 font-semibold hover:bg-slate-50 hover-slate-200"
+                    onClick={incrementShowItems}
+                >
+                    {`View ${showItemsValue[showItems]}`}
                 </button>
             </div>
         </div>
