@@ -5,11 +5,7 @@ import { useItems, useItemsStub } from "./hooks/useItems"
 
 const ItemsContext = createContext(useItemsStub);
 
-export const useItemsContext = () => {
-    const items = useContext(ItemsContext)
-
-    return items
-}
+export const useItemsContext = () => useContext(ItemsContext)
 
 export const ItemsContextProvider = ({
     children,

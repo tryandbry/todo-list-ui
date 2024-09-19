@@ -5,11 +5,7 @@ import { useList } from "./hooks/useList"
 
 const ListContext = createContext<List>({} as List);
 
-export const useListContext = () => {
-    const list = useContext(ListContext)
-
-    return list
-}
+export const useListContext = () => useContext(ListContext)
 
 export const ListContextProvider = ({
     children,
