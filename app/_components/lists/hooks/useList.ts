@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from "react"
 import { List } from "@/app/_shared/types"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 
@@ -16,6 +17,13 @@ export function useList() {
         queryKey: [queryKeys.list],
         queryFn: () => getList(listId),
     })
+
+    useEffect(() => {
+        queryClient.invalidateQueries({
+            queryKey: [queryKeys.list],
+        })
+    }, [listId, data, queryClient])
+
 
     return data
 }
