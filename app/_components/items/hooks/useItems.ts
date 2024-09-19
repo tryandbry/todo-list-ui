@@ -14,6 +14,12 @@ export enum showItemsValue {
     Complete,
 }
 
+export const useItemsStub: ReturnType<typeof useItems> = {
+    items: [] as Item[],
+    showItems: 0,
+    incrementShowItems: () => {},
+}
+
 export function useItems() {
     const list = useListContext()
     const listId = list?.listId
@@ -32,26 +38,17 @@ export function useItems() {
     }
 
     const selectFn = useCallback((data: Item[], showItems: showItemsValue) => {
-        console.log("selectFn showItems: ", showItems)
         switch (showItems) {
             case showItemsValue.All:
-                console.log("showing all")
-                console.log("data: ", data)
                 return data
             case showItemsValue.Incomplete:
-                console.log("showing incomplete")
-                console.log("data: ", data.filter((item) => !item.completed))
                 return data.filter((item) => !item.completed)
             case showItemsValue.Complete:
-                console.log("showing complete")
-                console.log("data: ", data.filter((item) => item.completed))
                 return data.filter((item) => item.completed)
             default:
-                console.log("showing [default] all")
-                console.log("data: ", data)
                 return data
         }
-    }, [showItems])
+    }, [])
 
     const { data: items = fallback } = useQuery({
         queryKey: [queryKeys.list, queryKeys.items],

@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState } from "react";
 
 import { Item } from "@/app/_shared/types"
-import { useItems } from "./hooks/useItems"
+import { useItems, useItemsStub } from "./hooks/useItems"
 
-const ItemsContext = createContext<ReturnType<typeof useItems> | null>(null);
+const ItemsContext = createContext(useItemsStub);
 
 export const useItemsContext = () => {
     const items = useContext(ItemsContext)
