@@ -12,6 +12,7 @@ export function useUpdateList() {
         onSuccess: () => {
             queryClient.invalidateQueries({
                 queryKey: [queryKeys.list],
+                exact: true,
             })
         }
     })
