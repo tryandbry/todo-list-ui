@@ -6,11 +6,14 @@ import { useStateWithDelayedFetch } from "@/app/_shared/useStateWithDelayedFetch
 import { useItemsContext } from "@/app/_components/items/ItemsContext"
 import { showItemsValue } from "@/app/_components/items/hooks/useItems"
 import { useListContext } from "./ListContext"
+import { useListIdContext } from "./ListIdContext"
 import { useUpdateList } from "./hooks/useUpdateList"
 
 export default function ListHeader() {
     const TIMEOUT_DURATION = 2000
     const list: List = useListContext()
+    // add to useEffect dependency array to ensure re-render when a new list is created
+    const { listId } = useListIdContext()
     const { showItems, incrementShowItems } = useItemsContext()
     const updateList = useUpdateList()
     const {
@@ -23,7 +26,7 @@ export default function ListHeader() {
         if (listState != list) {
             setListState(list, false)
         }
-    }, [list])
+    }, [list, listState, setListState, listId])
 
     return (
         <div className="rounded-t-xl flex flex-col self-center bg-white shadow-xl pt-4 px-4 mx-4 w-[300px] md:w-[480px]" >

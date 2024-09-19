@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-query"
 
 import { ListContextProvider } from "@/app/_components/lists/ListContext"
+import { ListIdContextProvider } from "@/app/_components/lists/ListIdContext"
 import { ItemsContextProvider } from "@/app/_components/items/ItemsContext"
 
 function makeQueryClient() {
@@ -42,11 +43,13 @@ export default function Providers({
 
     return (
         <QueryClientProvider client={queryClient}>
-            <ListContextProvider>
-                <ItemsContextProvider>
-                    {children}
-                </ItemsContextProvider>
-            </ListContextProvider>
+            <ListIdContextProvider>
+                <ListContextProvider>
+                    <ItemsContextProvider>
+                        {children}
+                    </ItemsContextProvider>
+                </ListContextProvider>
+            </ListIdContextProvider>
         </QueryClientProvider>
     )
 }
