@@ -1,9 +1,9 @@
 'use client'
 
+import { useState, useCallback } from "react"
 import { useQuery } from "@tanstack/react-query"
-import { queryKeys } from "@/react-query/constants"
-import { useState, useCallback, useEffect } from "react"
 
+import { queryKeys } from "@/react-query/constants"
 import { Item } from "@/app/_shared/types"
 import { useListContext } from "@/app/_components/lists/ListContext"
 import getItems from "../actions/getItems"

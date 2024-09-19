@@ -1,9 +1,7 @@
 'use client'
 
 import Item from "./Item"
-import { useItems } from "./hooks/useItems"
 import { useItemsContext } from "./ItemsContext"
-import { Item as ItemType } from "@/app/_shared/types"
 
 export default function Items() {
     const { items } = useItemsContext()

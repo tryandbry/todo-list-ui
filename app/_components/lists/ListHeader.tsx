@@ -1,10 +1,10 @@
 'use client'
 
+import { MouseEventHandler } from "react"
+import { List } from "@/app/_shared/types"
 import { useItemsContext } from "@/app/_components/items/ItemsContext"
 import { showItemsValue } from "@/app/_components/items/hooks/useItems"
 import { useListContext } from "./ListContext"
-import { List } from "@/app/_shared/types"
-import { MouseEventHandler } from "react"
 
 export default function ListHeader() {
     const list: List = useListContext()
