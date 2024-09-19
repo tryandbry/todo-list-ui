@@ -1,15 +1,11 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext } from "react";
 
 import { List } from "@/app/_shared/types"
 import { useList } from "./hooks/useList"
 
-const ListContext = createContext<List | null>(null);
+const ListContext = createContext<List>({} as List);
 
-export const useListContext = () => {
-    const list = useContext(ListContext)
-
-    return list
-}
+export const useListContext = () => useContext(ListContext)
 
 export const ListContextProvider = ({
     children,

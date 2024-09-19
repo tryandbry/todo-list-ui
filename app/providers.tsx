@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-query"
 
 import { ListContextProvider } from "@/app/_components/lists/ListContext"
+import { ItemsContextProvider } from "@/app/_components/items/ItemsContext"
 
 function makeQueryClient() {
     return new QueryClient()
@@ -42,7 +43,9 @@ export default function Providers({
     return (
         <QueryClientProvider client={queryClient}>
             <ListContextProvider>
-                {children}
+                <ItemsContextProvider>
+                    {children}
+                </ItemsContextProvider>
             </ListContextProvider>
         </QueryClientProvider>
     )
