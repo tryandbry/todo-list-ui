@@ -14,13 +14,19 @@ export enum showItemsValue {
     Complete,
 }
 
-export const useItemsStub: ReturnType<typeof useItems> = {
-    items: [] as Item[],
+export type UseItemsObject = {
+    items: Item[];
+    showItems: showItemsValue;
+    incrementShowItems: Function;
+}
+
+export const useItemsStub: UseItemsObject = {
+    items: [],
     showItems: 0,
     incrementShowItems: () => {},
 }
 
-export function useItems() {
+export function useItems(): UseItemsObject {
     const list = useListContext()
     const listId = list?.listId
     const fallback: Item[] = []
