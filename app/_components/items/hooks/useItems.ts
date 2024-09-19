@@ -1,13 +1,12 @@
 'use client'
 
 import { useState, useCallback, useEffect } from "react"
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 
 import { queryKeys } from "@/react-query/constants"
 import { Item } from "@/app/_shared/types"
 import { useListContext } from "@/app/_components/lists/ListContext"
 import getItems from "../actions/getItems"
-import { queryClient } from "@/react-query/queryClient"
 
 export enum showItemsValue {
     All,
@@ -65,11 +64,12 @@ export function useItems(): UseItemsObject {
         notifyOnChangeProps: "all",
     })
 
+    const queryClient = useQueryClient()
     useEffect(() => {
         queryClient.invalidateQueries({
             queryKey: [queryKeys.list, queryKeys.items],
         })
-    }, [list])
+    }, [list, queryClient])
 
     return { items, showItems, incrementShowItems }
 }
