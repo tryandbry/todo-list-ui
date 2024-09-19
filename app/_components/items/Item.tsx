@@ -10,6 +10,10 @@ interface ItemProps {
 export default function Item({ itemData }: ItemProps) {
     const TIMEOUT_DURATION = 2000
     const updateItem = useUpdateItem()
+    let divClasses = classNames(
+        "rounded-md pl-1",
+        { "bg-pink-500": !itemData.completed, "bg-slate-400": itemData.completed },
+    )
     let itemClasses = classNames(
         "flex items-center border-y-2 border-r-2 rounded-r-md p-2",
         { "bg-white": !itemData.completed, "bg-slate-100": itemData.completed },
@@ -27,7 +31,7 @@ export default function Item({ itemData }: ItemProps) {
     } = useStateWithDelayedFetch(updateItem, itemData, TIMEOUT_DURATION)
 
     return (
-        <div className="bg-pink-500 rounded-md pl-1">
+        <div className={divClasses}>
             <div className={itemClasses}>
                 <input type="text" name="" id="" value={itemState.name} className={textInputClasses}
                     onChange={(e) => setItemState({

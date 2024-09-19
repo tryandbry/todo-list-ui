@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useCallback } from "react"
-import { useQuery } from "@tanstack/react-query"
+import { useState, useCallback, useEffect } from "react"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 
 import { queryKeys } from "@/react-query/constants"
 import { Item } from "@/app/_shared/types"
@@ -61,7 +61,15 @@ export function useItems(): UseItemsObject {
         queryFn: () => getItems(listId),
         select: (data) => selectFn(data, showItems),
         enabled: !!listId,
+        notifyOnChangeProps: "all",
     })
+
+    const queryClient = useQueryClient()
+    useEffect(() => {
+        queryClient.invalidateQueries({
+            queryKey: [queryKeys.list, queryKeys.items],
+        })
+    }, [list, queryClient])
 
     return { items, showItems, incrementShowItems }
 }
