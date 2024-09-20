@@ -7,7 +7,7 @@ export default function AddList() {
     return (
         <button
             className="rounded-3xl border-b-4 border-pink-500 hover:-translate-y-1 hover:duration-100 hover:shadow-pink-300 h-12 w-12 bg-pink-400 flex justify-center items-center shadow-xl"
-            onClick={createList}
+            onClick={() => createList()}
         >
             <svg xmlns="http://www.w3.org/2000/svg"
                 width="24"
