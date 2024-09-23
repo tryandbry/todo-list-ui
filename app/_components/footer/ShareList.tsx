@@ -1,15 +1,21 @@
 import { Dispatch, SetStateAction } from "react"
+import classNames from "classnames"
 
 export default function ShareList(
     { showShareBar, setShowShareBar }:
     { showShareBar: boolean, setShowShareBar: Dispatch<SetStateAction<boolean>>}
 ) {
+    const buttonClasses = classNames(
+        "rounded-3xl border-b-4 border-pink-500 hover:-translate-y-1 hover:duration-100 hover:shadow-pink-300 h-12 w-12 bg-pink-400 flex justify-center items-center shadow-xl",
+        { "bg-pink-400": !showShareBar, "bg-pink-700": showShareBar },
+    )
     const handleClick = () => {
         setShowShareBar(!showShareBar)
     }
 
     return (
-        <button className="rounded-3xl border-b-4 border-pink-500 hover:-translate-y-1 hover:duration-100 hover:shadow-pink-300 h-12 w-12 bg-pink-400 flex justify-center items-center shadow-xl"
+        // <button className="rounded-3xl border-b-4 border-pink-500 hover:-translate-y-1 hover:duration-100 hover:shadow-pink-300 h-12 w-12 bg-pink-400 flex justify-center items-center shadow-xl"
+        <button className={buttonClasses}
             onClick={handleClick}
         >
             <svg xmlns="http://www.w3.org/2000/svg"

@@ -6,8 +6,13 @@ import { useListIdContext } from "../lists/ListIdContext"
 
 export default function Sharebar({ show }: { show: boolean }) {
     const componentClasses = classNames(
-        "rounded-xl my-2 flex flex-col self-center bg-white shadow-xl px-4 py-2 mx-4 w-[300px] md:w-[480px]",
-        { "hidden": !show }
+        "rounded-xl my-2 flex flex-col self-center bg-white shadow-xl px-4 py-2 mx-4 w-[300px] md:w-[480px] ease-in-out duration-300",
+        { "opacity-0": !show },
+        { "collapse": !show },
+        { "translate-y-3": !show, "translate-y-0": show },
+    )
+    const hoverTextClasses = classNames(
+        
     )
     const [isCopied, setIsCopied] = useState(false)
     const { listId } = useListIdContext()
@@ -44,13 +49,17 @@ export default function Sharebar({ show }: { show: boolean }) {
     )
 
     return (
-        // <div className="rounded-xl my-2 flex flex-col self-center bg-white shadow-xl px-4 py-2 mx-4 w-[300px] md:w-[480px]" >
         <div className={componentClasses}>
-            <p className="ml-1 mb-1 text-xs text-black">Link to this list:</p>
-            <div className="flex flex-row items-center">
+            <div className="flex flex-row items-center group">
                 <p
                     className="text-sm text-slate-700 mr-1 outline-none w-full border rounded-md py-0.5 px-3 select-all truncate"
                 >{listLink}</p>
+                {/* <!-- Tooltip text --> */}
+                <span
+                    className="duration-300 transition-all absolute hidden group-hover:flex left-0 -top-2 -translate-y-full px-2 py-1 bg-slate-500 rounded-lg text-center text-white text-xs after:content-[''] after:absolute after:left-1/2 after:top-[100%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-slate-500"
+                >
+                    Link to this list
+                </span>
                 <button
                     onClick={copyToClipboard}
                     className="p-1.5 rounded-md hover:bg-slate-100"
