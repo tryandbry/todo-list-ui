@@ -8,7 +8,7 @@ export function useCreateList() {
     const defaultListName = "Newly Created Todo List"
     const { setListId } = useListIdContext()
 
-    const { mutate } = useMutation({
+    return useMutation({
         mutationFn: () => createList(defaultListName),
         onSuccess: (newList) => {
             if (newList?.listId) {
@@ -16,6 +16,4 @@ export function useCreateList() {
             }
         },
     })
-
-    return mutate
 }
