@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useEffect } from "react"
 import classNames from "classnames"
 
 import { useListIdContext } from "../lists/ListIdContext"
@@ -13,17 +13,40 @@ export default function TrashModal(
         {"hidden": !showTrashModal },
     )
     const handleCancel = () => {
+        resetDelete()
+        resetCreate()
         setShowTrashModal(false)
     }
     const { listId, setListId } = useListIdContext()
-    const deleteList = useDeleteList()
-    const createList = useCreateList()
+    const { mutate: deleteList, isPending: pendingDelete, isError: errorDelete, isSuccess: successDelete, reset: resetDelete } = useDeleteList()
+    const { mutate: createList, isPending: pendingCreate, isError: errorCreate, isSuccess: successCreate, reset: resetCreate } = useCreateList()
+    const isPending = pendingDelete || pendingCreate
+    const isError = errorDelete || errorCreate
+    const confirmButtonClasses = classNames(
+        "rounded-lg px-4 py-2",
+        {"bg-pink-500 hover:bg-pink-600": !isError, "bg-slate-800 cursor-not-allowed text-black": isError}
+    )
+    const spinnerClasses = classNames(
+        "mr-2 w-4 h-4",
+        {"hidden": !isPending || isError },
+    )
+    const errorMessageClasses = classNames(
+        {"hidden": !isError },
+    )
     const handleConfirm = () => {
-        // TODO: handle errors
         deleteList(listId)
         createList()
-        setShowTrashModal(false)
     }
+
+    useEffect(() => {
+        // hide modal if old list is deleted and new list is ready
+        if (successDelete && successCreate) {
+            resetDelete()
+            resetCreate()
+            setShowTrashModal(false)
+        }
+    }, [successDelete, successCreate, resetCreate, resetDelete, setShowTrashModal] )
+
     return (
         <div className={componentClasses}>
             <div className="absolute top-0 left-0 h-screen bg-black w-full opacity-70"></div>
@@ -48,8 +71,24 @@ export default function TrashModal(
                         <h2>Delete List?</h2>
                         <div className="flex flex-row gap-2">
                             <button onClick={handleCancel} className="rounded-lg bg-slate-500 hover:bg-slate-600 px-4 py-2">Cancel</button>
-                            <button onClick={handleConfirm} className="rounded-lg bg-pink-500 hover:bg-pink-600 px-4 py-2">Confirm</button>
+                            <button onClick={handleConfirm} className={confirmButtonClasses} disabled={isError}>
+                                <div className="flex flex-row items-center">
+                                    {/* spinner */}
+                                    <div className={spinnerClasses}>
+                                        <svg
+                                            className="animate-spin fill-white"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 512 512"
+                                        >
+                                            {/* <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--> */}
+                                            <path d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm464-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM142.9 437A48 48 0 1 0 75 369.1 48 48 0 1 0 142.9 437zm0-294.2A48 48 0 1 0 75 75a48 48 0 1 0 67.9 67.9zM369.1 437A48 48 0 1 0 437 369.1 48 48 0 1 0 369.1 437z"/>
+                                        </svg>
+                                    </div>
+                                    Confirm
+                                </div>
+                            </button>
                         </div>
+                        <p className={errorMessageClasses}>Something went wrong :(</p>
                     </div>
                 </div>
             </div>

@@ -3,7 +3,7 @@
 import { useCreateList } from "@/app/_components/lists/hooks/useCreateList"
 
 export default function AddList() {
-    const createList = useCreateList()
+    const { mutate: createList } = useCreateList()
     return (
         <button
             className="rounded-3xl border-b-4 border-pink-500 hover:-translate-y-1 hover:duration-100 hover:shadow-pink-300 h-12 w-12 bg-pink-400 flex justify-center items-center shadow-xl"

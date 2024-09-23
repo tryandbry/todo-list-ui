@@ -5,9 +5,7 @@ import deleteList from "../actions/deleteList"
 export function useDeleteList() {
     const queryClient = useQueryClient();
 
-    const { mutate } = useMutation({
+    return useMutation({
         mutationFn: (listId: string) => deleteList(listId),
     })
-
-    return mutate
 }
