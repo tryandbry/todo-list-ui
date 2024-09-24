@@ -6,9 +6,9 @@ export type List = {
 };
 
 export type Item = {
-    itemId: string;
+    itemId?: string;
     name: string;
-    completed: boolean;
+    completed?: boolean;
     list?: List;
     createdAt?: number;
     updatedAt?: number;
