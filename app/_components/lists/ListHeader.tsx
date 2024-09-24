@@ -37,10 +37,10 @@ export default function ListHeader() {
                     }, false)}
                 ></input>
                 <button 
-                    className="rounded-sm shrink-0 text-sm py-0 5 px-5 border-2 border-slate-100 text-slate-500 font-semibold hover:bg-slate-50 hover-slate-200"
+                    className="rounded-sm shrink-0 text-xs py-0 5 px-2 border-2 border-slate-100 text-slate-500 font-semibold hover:bg-slate-50 hover-slate-200"
                     onClick={incrementShowItems as MouseEventHandler}
                 >
-                    {`View ${showItemsValue[showItems]}`}
+                    {`${showItemsValue[showItems]}`}
                 </button>
             </div>
         </div>

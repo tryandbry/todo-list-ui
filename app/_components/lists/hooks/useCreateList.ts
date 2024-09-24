@@ -5,7 +5,7 @@ import { useListIdContext } from "@/app/_components/lists/ListIdContext"
 import { useMutation } from "@tanstack/react-query"
 
 export function useCreateList() {
-    const defaultListName = "Newly Created Todo List"
+    const defaultListName = "New Todo List"
     const { setListId } = useListIdContext()
 
     return useMutation({

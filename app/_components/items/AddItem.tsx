@@ -48,6 +48,8 @@ export default function AddItem() {
         if (isError || isSuccess) {
             reset()
             setInputText('')
+            // set focus back to "add item" input element to enable rapid input of items
+            document.getElementById('input-add-item')?.focus()
         }
     }, [isError, isSuccess, reset])
 
@@ -55,7 +57,7 @@ export default function AddItem() {
         <div className="flex flex-col mb-2">
             <div className={inputDivDivClasses}>
                 <div className={inputDivClasses}>
-                    <input type="text" name="" id="" placeholder="Enter new todo item"
+                    <input type="text" name="" id="input-add-item" placeholder="Enter new todo item"
                         disabled={isPending}
                         value={inputText}
                         onChange={handleOnChange}

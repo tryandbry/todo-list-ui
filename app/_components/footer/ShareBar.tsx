@@ -1,7 +1,7 @@
 'use client'
 
 import classNames from "classnames"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useListIdContext } from "../lists/ListIdContext"
 
 export default function Sharebar({ show }: { show: boolean }) {
@@ -15,13 +15,8 @@ export default function Sharebar({ show }: { show: boolean }) {
         
     )
     const [isCopied, setIsCopied] = useState(false)
+    const [hostName, setHostName] = useState("")
     const { listId } = useListIdContext()
-    const hostName = (() => {
-        if (typeof window !== 'undefined') {
-            return window.location.origin
-        }
-        return ""
-    })()
     const listLink = `${hostName}/list/${listId}`
     const copyToClipboard = async () => {
         try {
@@ -47,6 +42,13 @@ export default function Sharebar({ show }: { show: boolean }) {
             <polyline points="20 6 9 17 4 12"></polyline>
         </svg>
     )
+
+    // workaround to ensure "window" is available on client side
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setHostName(window.location.origin)
+        }
+    }, [])
 
     return (
         <div className={componentClasses}>
