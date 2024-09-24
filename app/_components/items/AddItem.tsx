@@ -19,7 +19,7 @@ export default function AddItem() {
         { "cursor-progress bg-slate-100": isPending, "bg-white": !isPending },
     )
     const inputDivDivClasses = classNames(
-        "bg-cyan-500 rounded-md pl-1",
+        "bg-cyan-500 rounded-md pl-1 mr-8",
         { "animate-pulse": isPending },
     )
     const errorSpanClasses = classNames(
