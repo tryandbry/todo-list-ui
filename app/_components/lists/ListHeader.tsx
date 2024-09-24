@@ -28,7 +28,7 @@ export default function ListHeader() {
     return (
         <div className="rounded-t-xl flex flex-col self-center bg-white shadow-xl pt-4 px-4 mx-4 w-[300px] md:w-[480px]" >
             <div className="flex flex-row mb-6">
-                <input type="text" name="" id=""
+                <input type="text" name="" id="input-list-name"
                     value={listState.name}
                     className="text-l text-black font-semibold mr-2 outline-none w-full grow" 
                     onChange={(e) => setListState({

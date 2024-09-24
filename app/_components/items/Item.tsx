@@ -40,13 +40,13 @@ export default function Item({ itemData }: ItemProps) {
         <div className="flex flex-row items-center gap-2">
             <div className={divClasses}>
                 <div className={itemClasses}>
-                    <input type="text" name="" id="" value={itemState.name} className={textInputClasses}
+                    <input type="text" name="" id={`input-item-name-${itemData.itemId}`} value={itemState.name} className={textInputClasses}
                         onChange={(e) => setItemState({
                             ...itemState,
                             name: e.target.value,
                         }, false)}
                     ></input>
-                    <input type="checkbox" name="" id=""
+                    <input type="checkbox" name="" id={`input-item-completed-${itemData.itemId}`}
                         className="ml-4 mr-2 h-6 w-6"
                         checked={itemState.completed}
                         onChange={(e) => setItemState({

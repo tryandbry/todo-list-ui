@@ -16,19 +16,13 @@ export function useStateWithDelayedFetch<Type>(mutateFn: Function, initialData: 
     const timeout = useRef<ReturnType<typeof setTimeout> | undefined>()
     const timeoutDuration = useRef(timeoutDelay)
 
-    // store previous [data] state to prevent unnecessary PATCH requests
-    useEffect(() => {
-        prevData.current = data
-    }, [data])
-
     useEffect(() => {
         // guard clause to prevent unnecessary updates if data has not changed.
-        if (data == prevData.current) {
+        if (data === prevData.current) {
             return
         }
 
         timeout.current = setTimeout(async () => {
-            console.log("delayed fetch useEffect timeout callback")
             setIsPending(true)
             try {
                 await mutateFn(data)
@@ -41,6 +35,13 @@ export function useStateWithDelayedFetch<Type>(mutateFn: Function, initialData: 
 
         return () => clearTimeout(timeout.current)
     }, [data, mutateFn, timeoutDuration])
+
+    // store previous [data] state to prevent unnecessary PATCH requests
+    // Note: must be after the above useEffect to ensure that prevData doesn't get
+    //       refreshed BEFORE the guard clause
+    useEffect(() => {
+        prevData.current = data
+    }, [data])
 
     const setDataWithOptions = (updatedData: Type, immediate: boolean) => {
         timeoutDuration.current = immediate ? 0 : timeoutDelay
