@@ -24,7 +24,6 @@ export default function AddItem() {
     )
     const errorSpanClasses = classNames(
         "bg-red-500 text-xs px-2 ease-in-out duration-300",
-        //TODO: make error transition fade
         { "opacity-0": !showError },
         { "collapse": !showError },
     )
