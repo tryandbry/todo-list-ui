@@ -1,14 +1,20 @@
 import classNames from "classnames"
-import { useState } from "react"
 import type { Item as ItemType } from "@/app/_shared/types"
 import { useStateWithDelayedFetch } from "@/app/_shared/useStateWithDelayedFetch"
 import { useUpdateItem } from "./hooks/useUpdateItem"
+import { useDeleteItem } from "./hooks/useDeleteItem"
 
 interface ItemProps {
     itemData: ItemType;
 }
 export default function Item({ itemData }: ItemProps) {
     const TIMEOUT_DURATION = 2000
+    const { mutate: deleteItem } = useDeleteItem()
+    const handleDeleteItem = () => {
+        if (itemData?.itemId) {
+            deleteItem(itemData.itemId)
+        }
+    }
     const updateItem = useUpdateItem()
     let divClasses = classNames(
         "rounded-md pl-1 grow shrink",
@@ -50,7 +56,9 @@ export default function Item({ itemData }: ItemProps) {
                     ></input>
                 </div>
             </div>
-            <div>
+            <button
+                onClick={handleDeleteItem}
+            >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -67,7 +75,7 @@ export default function Item({ itemData }: ItemProps) {
                     <line x1="15" y1="9" x2="9" y2="15"></line>
                     <line x1="9" y1="9" x2="15" y2="15"></line>
                 </svg>
-            </div>
+            </button>
         </div>
     )
 }
