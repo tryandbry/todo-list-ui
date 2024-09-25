@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import Link from "next/link"
 import { useState, useEffect } from 'react'
 import { useListIdContext } from "@/app/_components/lists/ListIdContext"
@@ -11,11 +11,26 @@ export default function Page({ params }: { params: { listId: string } }) {
   const [isError, setIsError] = useState(false)
   const router = useRouter()
   const { setListId } = useListIdContext()
+  const delayedRedirect = () => {
+    const key = setTimeout(() => {
+        if (redirectCountdown == 1) {
+        router.push('/')
+        return
+      }
+
+      setRedirectCountdown(redirectCountdown - 1)
+    }, 1000)
+  }
+
+  useEffect(() => {
+    delayedRedirect()
+  }, [redirectCountdown])
 
   useEffect(() => {
     console.log("load page useEffect. params.listId: ", params.listId)
     getList(params.listId)
       .then((list) => {
+        console.log("just before setListId")
         setListId(params.listId)
       })
       .then(() => {
@@ -25,14 +40,7 @@ export default function Page({ params }: { params: { listId: string } }) {
       .catch(() => {
         setIsError(true)
         console.error("Unable to fetch requested list")
-        setTimeout(() => {
-          if (redirectCountdown == 1) {
-            router.push('/')
-            return
-          }
-
-          setRedirectCountdown(redirectCountdown - 1)
-        }, 1000)
+        delayedRedirect()
       })
   }, [])
 
