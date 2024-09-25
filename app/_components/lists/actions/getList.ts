@@ -1,6 +1,6 @@
 import { List } from "@/app/_shared/types"
 
-export default async function getList(listId: string | null): Promise<List> {
+export default async function getList(listId: string | null): Promise<List | null> {
     if (!listId) {
         throw new Error("Invalid list ID")
     }
@@ -11,6 +11,6 @@ export default async function getList(listId: string | null): Promise<List> {
                 return Promise.resolve(response.json())
             }
 
-            return Promise.reject(response.json())
+            return Promise.reject(null)
         })
 }

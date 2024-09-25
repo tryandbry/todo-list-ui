@@ -23,22 +23,23 @@ export default function App() {
       if (listId !== "") return
 
       const localListId = getLocal('listId')
-      console.log("listId from local storage: ", localListId)
       getList(localListId)
           .then((list) => {
-              if (list.listId) {
-                  setListId(list.listId)
-              }
+            if (!list?.listId) {
+              throw new Error("Unable to fetch last used list")
+            }
+
+            setListId(list.listId)
           })
           .catch(() => {
-              console.error("Loading list ID from local storage failed.  Creating a new list as a fallback")
-              const newListName = "My New List"
-              createList(newListName)
-                  .then((newList) => {
-                      if (newList?.listId) {
-                          setListId(newList?.listId)
-                      }
-                  })
+            console.error("Loading list ID from local storage failed.  Creating a new list as a fallback")
+            const newListName = "My New List"
+            createList(newListName)
+              .then((newList) => {
+                if (newList?.listId) {
+                    setListId(newList?.listId)
+                }
+              })
           })
   }, [listId])
 

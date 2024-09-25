@@ -13,18 +13,21 @@ export default function Page({ params }: { params: { listId: string } }) {
   const { setListId } = useListIdContext()
   const delayedRedirect = useCallback(() => {
     const key = setTimeout(() => {
-        if (redirectCountdown == 1) {
+        if (redirectCountdown <= 1) {
         router.push('/')
         return
       }
 
       setRedirectCountdown((r) => r - 1)
     }, 1000)
+
+    return key
   }, [redirectCountdown, router])
 
   // for redirect countdown on error
   useEffect(() => {
-    delayedRedirect()
+    const key = delayedRedirect()
+    return () => clearTimeout(key)
   }, [redirectCountdown, delayedRedirect])
 
   useEffect(() => {
