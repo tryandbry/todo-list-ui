@@ -2,7 +2,7 @@
 
 import { redirect, useRouter } from 'next/navigation'
 import Link from "next/link"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useListIdContext } from "@/app/_components/lists/ListIdContext"
 import getList from "@/app/_components/lists/actions/getList"
 
@@ -11,20 +11,21 @@ export default function Page({ params }: { params: { listId: string } }) {
   const [isError, setIsError] = useState(false)
   const router = useRouter()
   const { setListId } = useListIdContext()
-  const delayedRedirect = () => {
+  const delayedRedirect = useCallback(() => {
     const key = setTimeout(() => {
         if (redirectCountdown == 1) {
         router.push('/')
         return
       }
 
-      setRedirectCountdown(redirectCountdown - 1)
+      setRedirectCountdown((r) => r - 1)
     }, 1000)
-  }
+  }, [redirectCountdown, router])
 
+  // for redirect countdown on error
   useEffect(() => {
     delayedRedirect()
-  }, [redirectCountdown])
+  }, [redirectCountdown, delayedRedirect])
 
   useEffect(() => {
     console.log("load page useEffect. params.listId: ", params.listId)

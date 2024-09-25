@@ -15,7 +15,9 @@ import useLocalStorage from "@/app/_shared/useLocalStorage"
 import { useListIdContext } from "@/app/_components/lists/ListIdContext"
 
 export default function App() {
-  const { getLocal, setLocal } = useLocalStorage()
+  // either load the last list [from local storage]
+  // or else create a new list
+  const { getLocal } = useLocalStorage()
   const { listId, setListId } = useListIdContext()
   useEffect(() => {
       if (listId !== "") return
@@ -39,6 +41,7 @@ export default function App() {
                   })
           })
   }, [listId])
+
   return (
     <>
       <ListHeader />
