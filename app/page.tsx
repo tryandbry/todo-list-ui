@@ -40,6 +40,9 @@ export default function App() {
                     setListId(newList?.listId)
                 }
               })
+              .catch(() => {
+                console.error("Failed to create a new list")
+              })
           })
   }, [listId])
 

@@ -31,14 +31,11 @@ export default function Page({ params }: { params: { listId: string } }) {
   }, [redirectCountdown, delayedRedirect])
 
   useEffect(() => {
-    console.log("load page useEffect. params.listId: ", params.listId)
     getList(params.listId)
       .then((list) => {
-        console.log("just before setListId")
         setListId(params.listId)
       })
       .then(() => {
-        console.log("Redirecting!")
         router.push('/')
       })
       .catch(() => {
