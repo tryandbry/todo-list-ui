@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <div className="h-screen flex justify-center bg-gradient-to-br from-teal-300 to-cyan-500">
+          <div className="h-screen flex justify-center bg-gradient-to-br from-teal-300 to-cyan-600">
             <div className="flex flex-col">
               {/* title */}
               <h1 className="self-start ml-4 my-4 text-3xl italic font-semibold tracking-widest text-cyan-300">To Do List</h1>
