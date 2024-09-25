@@ -11,7 +11,7 @@ import getList from "@/app/_components/lists/actions/getList"
 export function useList() {
     const { listId } = useListIdContext()
     const queryClient = useQueryClient()
-    const fallback: List = { name: "My New Todo List" }
+    const fallback: List = { name: "" }
 
     const { data = fallback } = useQuery({
         queryKey: [queryKeys.list],

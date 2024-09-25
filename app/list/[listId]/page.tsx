@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import Link from "next/link"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useListIdContext } from "@/app/_components/lists/ListIdContext"
 import getList from "@/app/_components/lists/actions/getList"
 
@@ -11,24 +11,37 @@ export default function Page({ params }: { params: { listId: string } }) {
   const [isError, setIsError] = useState(false)
   const router = useRouter()
   const { setListId } = useListIdContext()
+  const delayedRedirect = useCallback(() => {
+    const key = setTimeout(() => {
+        if (redirectCountdown <= 1) {
+        router.push('/')
+        return
+      }
+
+      setRedirectCountdown((r) => r - 1)
+    }, 1000)
+
+    return key
+  }, [redirectCountdown, router])
+
+  // for redirect countdown on error
+  useEffect(() => {
+    const key = delayedRedirect()
+    return () => clearTimeout(key)
+  }, [redirectCountdown, delayedRedirect])
 
   useEffect(() => {
     getList(params.listId)
       .then((list) => {
         setListId(params.listId)
       })
-      .then(() => router.push('/'))
+      .then(() => {
+        router.push('/')
+      })
       .catch(() => {
         setIsError(true)
         console.error("Unable to fetch requested list")
-        setTimeout(() => {
-          if (redirectCountdown == 1) {
-            router.push('/')
-            return
-          }
-
-          setRedirectCountdown(redirectCountdown - 1)
-        }, 1000)
+        delayedRedirect()
       })
   }, [])
 
