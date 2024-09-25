@@ -43,6 +43,7 @@ export default function Page({ params }: { params: { listId: string } }) {
         console.error("Unable to fetch requested list")
         delayedRedirect()
       })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (isError) {

@@ -3,7 +3,7 @@ import React, { createContext, useContext } from "react";
 import { List } from "@/app/_shared/types"
 import { useList } from "./hooks/useList"
 
-const ListContext = createContext<List>({} as List);
+const ListContext = createContext<List | null>({} as List);
 
 export const useListContext = () => useContext(ListContext)
 

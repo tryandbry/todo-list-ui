@@ -44,7 +44,8 @@ export default function App() {
                 console.error("Failed to create a new list")
               })
           })
-  }, [listId])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>
