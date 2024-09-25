@@ -10,7 +10,7 @@ import { useUpdateList } from "./hooks/useUpdateList"
 
 export default function ListHeader() {
     const TIMEOUT_DURATION = 2000
-    const list: List = useListContext()
+    const list: List | null = useListContext()
     const { showItems, incrementShowItems } = useItemsContext()
     const updateList = useUpdateList()
     const {
@@ -23,13 +23,14 @@ export default function ListHeader() {
         if (listState != list) {
             setListState(list, false)
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [list])
 
     return (
         <div className="rounded-t-xl flex flex-col self-center bg-white shadow-xl pt-4 px-4 mx-4 w-[300px] md:w-[480px]" >
             <div className="flex flex-row mb-6">
                 <input type="text" name="" id="input-list-name" placeholder="My new to do list"
-                    value={listState.name}
+                    value={listState?.name}
                     className="text-l text-black font-semibold mr-2 outline-none w-full grow" 
                     onChange={(e) => setListState({
                         ...list,
