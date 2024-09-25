@@ -13,11 +13,15 @@ export default function Page({ params }: { params: { listId: string } }) {
   const { setListId } = useListIdContext()
 
   useEffect(() => {
+    console.log("load page useEffect. params.listId: ", params.listId)
     getList(params.listId)
       .then((list) => {
         setListId(params.listId)
       })
-      .then(() => router.push('/'))
+      .then(() => {
+        console.log("Redirecting!")
+        router.push('/')
+      })
       .catch(() => {
         setIsError(true)
         console.error("Unable to fetch requested list")

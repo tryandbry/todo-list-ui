@@ -11,5 +11,11 @@ export default async function createList(name: string): Promise<List> {
             body: JSON.stringify({ name }),
             cache: "no-store",
         })
-        .then((response) => response.json())
+        .then((response) => {
+            if (response.ok) {
+                return Promise.resolve(response.json())
+            }
+
+            return Promise.reject(response.json())
+        })
 }
