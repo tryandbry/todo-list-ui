@@ -54,7 +54,7 @@ export default function Sharebar({ show }: { show: boolean }) {
         <div className={componentClasses}>
             <div className="flex flex-row items-center group">
                 <p
-                    className="text-sm text-slate-700 mr-1 outline-none w-full border rounded-md py-0.5 px-3 select-all truncate"
+                    className="font-mono text-sm text-slate-700 mr-1 outline-none w-full border rounded-md py-0.5 px-3 select-all truncate"
                 >{listLink}</p>
                 {/* <!-- Tooltip text --> */}
                 <span
