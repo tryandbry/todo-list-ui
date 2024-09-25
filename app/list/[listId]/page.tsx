@@ -1,6 +1,6 @@
 'use client'
 
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import Link from "next/link"
 import { useState, useEffect, useCallback } from 'react'
 import { useListIdContext } from "@/app/_components/lists/ListIdContext"

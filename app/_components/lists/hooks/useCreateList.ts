@@ -9,9 +9,7 @@ export function useCreateList() {
     const { setListId } = useListIdContext()
 
     return useMutation({
-        mutationFn: () => {
-            return createList(defaultListName)
-        },
+        mutationFn: () => createList(defaultListName),
         onSuccess: (newList) => {
             if (newList?.listId) {
                 setListId(newList.listId)
