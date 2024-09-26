@@ -24,8 +24,7 @@ export default function AddItem() {
     )
     const errorSpanClasses = classNames(
         "bg-red-500 text-xs px-2 ease-in-out duration-300",
-        { "opacity-0": !showError },
-        { "collapse": !showError },
+        { "opacity-0 collapse h-0": !showError },
     )
     const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInputText(event.target.value)
@@ -51,20 +50,22 @@ export default function AddItem() {
     }, [isError, isSuccess, reset])
 
     return (
-        <div className="flex flex-col mb-2">
-            <div className={inputDivDivClasses}>
-                <div className={inputDivClasses}>
-                    <form onSubmit={handleSubmit}>
-                        <input type="text" name="" id="input-add-item" placeholder="Enter new todo item"
-                            disabled={isPending}
-                            value={inputText}
-                            onChange={handleOnChange}
-                            className={inputClasses}
-                        ></input>
-                    </form>
+        <div className="flex flex-col self-center bg-white shadow-xl px-4 mx-4 w-[300px] md:w-[480px]" >
+            <div className="flex flex-col mb-2">
+                <div className={inputDivDivClasses}>
+                    <div className={inputDivClasses}>
+                        <form onSubmit={handleSubmit}>
+                            <input type="text" name="" id="input-add-item" placeholder="Enter new todo item"
+                                disabled={isPending}
+                                value={inputText}
+                                onChange={handleOnChange}
+                                className={inputClasses}
+                            ></input>
+                        </form>
+                    </div>
                 </div>
+                <span className={errorSpanClasses}>Unable to create item</span>
             </div>
-            <span className={errorSpanClasses}>Unable to create item</span>
         </div>
     )
 }
