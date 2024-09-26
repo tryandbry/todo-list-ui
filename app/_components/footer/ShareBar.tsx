@@ -6,10 +6,8 @@ import { useListIdContext } from "../lists/ListIdContext"
 
 export default function Sharebar({ show }: { show: boolean }) {
     const componentClasses = classNames(
-        "rounded-xl my-2 flex flex-col self-center bg-white shadow-xl px-4 py-2 mx-4 w-[300px] md:w-[480px] ease-in-out duration-300",
-        { "opacity-0": !show },
-        { "collapse": !show },
-        { "translate-y-3": !show, "translate-y-0": show },
+        "rounded-xl flex flex-col self-center bg-white shadow-xl px-4 mx-4 w-[300px] md:w-[480px] ease-in-out duration-300",
+        { "opacity-0 collapse h-0 py-0 my-0": !show, "my-2 py-2": show },
     )
     const hoverTextClasses = classNames(
         
