@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, ChangeEvent, KeyboardEvent } from "react"
+import { useState, useEffect, ChangeEvent, KeyboardEvent, FormEventHandler } from "react"
 import classNames from "classnames"
 
 import { useCreateItem } from "./hooks/useCreateItem"
@@ -30,11 +30,8 @@ export default function AddItem() {
     const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInputText(event.target.value)
     }
-    const handleOnKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-        if (event.key !== "Enter") {
-            return
-        }
-
+    const handleSubmit = (event) => {
+        event.preventDefault()
         const item: Item = { name: inputText }
         createItem(item)
     }
@@ -57,13 +54,14 @@ export default function AddItem() {
         <div className="flex flex-col mb-2">
             <div className={inputDivDivClasses}>
                 <div className={inputDivClasses}>
-                    <input type="text" name="" id="input-add-item" placeholder="Enter new todo item"
-                        disabled={isPending}
-                        value={inputText}
-                        onChange={handleOnChange}
-                        onKeyDown={handleOnKeyDown}
-                        className={inputClasses}
-                    ></input>
+                    <form onSubmit={handleSubmit}>
+                        <input type="text" name="" id="input-add-item" placeholder="Enter new todo item"
+                            disabled={isPending}
+                            value={inputText}
+                            onChange={handleOnChange}
+                            className={inputClasses}
+                        ></input>
+                    </form>
                 </div>
             </div>
             <span className={errorSpanClasses}>Unable to create item</span>
