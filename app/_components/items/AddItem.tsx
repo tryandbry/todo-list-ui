@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, ChangeEvent, KeyboardEvent, FormEventHandler } from "react"
+import { useState, useEffect, ChangeEvent, FormEvent } from "react"
 import classNames from "classnames"
 
 import { useCreateItem } from "./hooks/useCreateItem"
@@ -30,7 +30,7 @@ export default function AddItem() {
     const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInputText(event.target.value)
     }
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const item: Item = { name: inputText }
         createItem(item)
