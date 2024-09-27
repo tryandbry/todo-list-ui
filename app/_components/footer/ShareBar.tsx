@@ -9,9 +9,6 @@ export default function Sharebar({ show }: { show: boolean }) {
         "rounded-xl flex flex-col self-center bg-white shadow-xl px-4 mx-4 w-[300px] md:w-[480px] ease-in-out duration-300",
         { "opacity-0 collapse h-0 py-0 my-0": !show, "my-2 py-2": show },
     )
-    const hoverTextClasses = classNames(
-        
-    )
     const [isCopied, setIsCopied] = useState(false)
     const [hostName, setHostName] = useState("")
     const { listId } = useListIdContext()
@@ -20,7 +17,7 @@ export default function Sharebar({ show }: { show: boolean }) {
         try {
             await navigator.clipboard.writeText(listLink)
             setIsCopied(true)
-            setTimeout(() => setIsCopied(false), 2000)
+            setTimeout(() => setIsCopied(false), 1000)
         } catch (err) {
             console.error("Failed to copy to clipboard: ", err);
         }
@@ -40,6 +37,14 @@ export default function Sharebar({ show }: { show: boolean }) {
             <polyline points="20 6 9 17 4 12"></polyline>
         </svg>
     )
+    const copiedTooltipClasses = classNames(
+        "duration-300 transition-all absolute -translate-y-10 px-4 py-1 bg-slate-500 text-white text-center text-sm rounded-lg after:content-[''] after:absolute after:left-1/2 after:top-[100%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-slate-500",
+        { "opacity-0 collapse": !isCopied },
+    )
+    const hoverTextClasses = classNames(
+        "hidden transition-all absolute -translate-y-10 px-4 py-1 bg-slate-500 text-white text-center text-sm rounded-lg after:content-[''] after:absolute after:left-1/2 after:top-[100%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-slate-500",
+        { "group-hover:flex": !isCopied },
+    )
 
     // workaround to ensure "window" is available on client side
     useEffect(() => {
@@ -51,14 +56,16 @@ export default function Sharebar({ show }: { show: boolean }) {
     return (
         <div className={componentClasses}>
             <div className="flex flex-row items-center group">
-                <p
+                <button
+                    onClick={copyToClipboard}
                     className="font-mono text-sm text-slate-700 mr-1 outline-none w-full border rounded-md py-0.5 px-3 select-all truncate cursor-pointer"
-                >{listLink}</p>
+                >{listLink}</button>
                 {/* <!-- Tooltip text --> */}
-                <span
-                    className="duration-300 transition-all absolute hidden group-hover:flex left-0 -top-2 -translate-y-full px-2 py-1 bg-slate-500 rounded-lg text-center text-white text-xs after:content-[''] after:absolute after:left-1/2 after:top-[100%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-slate-500"
-                >
-                    Link to this list
+                <span className={copiedTooltipClasses}>
+                    Copied!
+                </span>
+                <span className={hoverTextClasses}>
+                    Share link to this list
                 </span>
                 <button
                     onClick={copyToClipboard}
