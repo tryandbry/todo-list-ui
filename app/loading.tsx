@@ -12,9 +12,6 @@ export default function Loading() {
                     <div className="bg-slate-200 h-6 mr-8 animate-pulse"></div>
                     <div className="bg-slate-200 h-10 mr-8 animate-pulse"></div>
                     <div className="bg-slate-200 h-10 mr-8 animate-pulse"></div>
-                    <div className="bg-slate-200 h-10 mr-8 animate-pulse"></div>
-                    <div className="bg-slate-200 h-10 mr-8 animate-pulse"></div>
-                    <div className="bg-slate-200 h-10 mr-8 animate-pulse"></div>
                 </div>
             </div>
         </>
