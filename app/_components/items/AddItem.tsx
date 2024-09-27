@@ -11,7 +11,7 @@ export default function AddItem() {
     const [showError, setShowError] = useState(false)
     const { mutate: createItem, reset, isPending, isError, isSuccess } = useCreateItem()
     const inputClasses = classNames(
-        "outline-none grow",
+        "outline-none w-full grow",
         { "cursor-progress bg-slate-100 text-slate-500": isPending },
     )
     const inputDivClasses = classNames(
@@ -54,7 +54,7 @@ export default function AddItem() {
             <div className="flex flex-col mb-2">
                 <div className={inputDivDivClasses}>
                     <div className={inputDivClasses}>
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit} className="w-full">
                             <input type="text" name="" id="input-add-item" placeholder="Enter new todo item"
                                 disabled={isPending}
                                 value={inputText}
