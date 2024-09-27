@@ -62,7 +62,7 @@ export default function Sharebar({ show }: { show: boolean }) {
                 </span>
                 <button
                     onClick={copyToClipboard}
-                    className="p-1.5 rounded-md hover:bg-slate-100"
+                    className="p-1.5 rounded-md hover:bg-slate-100 cursor-pointer"
                 >
                     {isCopied ? greenCheckIcon : copyIcon}
                 </button>
