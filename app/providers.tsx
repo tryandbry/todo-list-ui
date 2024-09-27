@@ -9,6 +9,7 @@ import {
 import { ListContextProvider } from "@/app/_components/lists/ListContext"
 import { ListIdContextProvider } from "@/app/_components/lists/ListIdContext"
 import { ItemsContextProvider } from "@/app/_components/items/ItemsContext"
+import { IsLoadingContextProvider } from "@/app/_shared/IsLoadingContext"
 
 function makeQueryClient() {
     return new QueryClient()
@@ -43,13 +44,15 @@ export default function Providers({
 
     return (
         <QueryClientProvider client={queryClient}>
-            <ListIdContextProvider>
-                <ListContextProvider>
-                    <ItemsContextProvider>
-                        {children}
-                    </ItemsContextProvider>
-                </ListContextProvider>
-            </ListIdContextProvider>
+            <IsLoadingContextProvider>
+                <ListIdContextProvider>
+                    <ListContextProvider>
+                        <ItemsContextProvider>
+                            {children}
+                        </ItemsContextProvider>
+                    </ListContextProvider>
+                </ListIdContextProvider>
+            </IsLoadingContextProvider>
         </QueryClientProvider>
     )
 }

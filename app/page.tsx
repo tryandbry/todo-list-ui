@@ -7,20 +7,24 @@ import AddItem from "@/app/_components/items/AddItem"
 import Items from "@/app/_components/items/Items"
 import Footer from "@/app/_components/footer/Footer"
 
-import { useEffect } from "react"
+import { useEffect, Suspense } from "react"
 import getList from "@/app/_components/lists/actions/getList"
 import createList from "@/app/_components/lists/actions/createList"
 import useLocalStorage from "@/app/_shared/useLocalStorage"
 import { useListIdContext } from "@/app/_components/lists/ListIdContext"
+import { useIsLoadingContext } from "@/app/_shared/IsLoadingContext"
+import Loading from "@/app/loading"
 
 export default function App() {
   // either load the last list [from local storage]
   // or else create a new list
+  const { isLoading, setIsLoading } = useIsLoadingContext()
   const { getLocal } = useLocalStorage()
   const { listId, setListId } = useListIdContext()
   useEffect(() => {
       if (listId !== "") return
 
+      setIsLoading(true)
       const localListId = getLocal('listId')
       getList(localListId)
           .then((list) => {
@@ -45,6 +49,12 @@ export default function App() {
           })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  if (isLoading) {
+    return (
+      <Loading />
+    )
+  }
 
   return (
     <>
