@@ -6,6 +6,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { queryKeys } from "@/react-query/constants"
 import { Item } from "@/app/_shared/types"
 import { useListContext } from "@/app/_components/lists/ListContext"
+import { useIsLoadingContext } from "@/app/_shared/IsLoadingContext"
 import getItems from "../actions/getItems"
 
 export enum showItemsValue {
@@ -27,6 +28,7 @@ export const useItemsStub: UseItemsObject = {
 }
 
 export function useItems(): UseItemsObject {
+    const { setIsLoading } = useIsLoadingContext()
     const list = useListContext()
     const listId = list?.listId
     const fallback: Item[] = []
@@ -58,7 +60,14 @@ export function useItems(): UseItemsObject {
 
     const { data: items = fallback } = useQuery({
         queryKey: [queryKeys.list, queryKeys.items],
-        queryFn: () => getItems(listId),
+        queryFn: () => {
+            return getItems(listId)
+                .then((items) => {
+                    // show App after initial load
+                    setIsLoading(false)
+                    return items
+                })
+        },
         select: (data) => selectFn(data, showItems),
         enabled: !!listId,
         notifyOnChangeProps: "all",
