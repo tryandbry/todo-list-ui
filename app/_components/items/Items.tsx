@@ -18,7 +18,7 @@ export default function Items() {
 
     return (
         <div className="rounded-b-xl flex flex-col self-center bg-white shadow-xl pb-4 px-4 mx-4 w-[300px] md:w-[480px] overflow-auto" >
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1">
                 {/* show incomplete items first */}
                 {items
                     .filter((item) => !item.completed)

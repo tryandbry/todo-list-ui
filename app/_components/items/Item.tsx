@@ -21,7 +21,7 @@ export default function Item({ itemData }: ItemProps) {
         { "bg-pink-500": !itemData.completed, "bg-slate-400": itemData.completed },
     )
     let itemClasses = classNames(
-        "flex items-center border-y-2 border-r-2 rounded-r-md p-2",
+        "flex items-center border-y-2 border-r-2 rounded-r-md px-2 py-1 text-sm md:py-2 md:text-base",
         { "bg-white": !itemData.completed, "bg-slate-100": itemData.completed },
         { "text-black": !itemData.completed, "text-slate-400": itemData.completed },
         { "border-slate-100": !itemData.completed, "border-slate-200": itemData.completed },
@@ -47,7 +47,7 @@ export default function Item({ itemData }: ItemProps) {
                         }, false)}
                     ></input>
                     <input type="checkbox" name="" id={`input-item-completed-${itemData.itemId}`}
-                        className="ml-4 mr-2 h-6 w-6"
+                        className="ml-4 mr-2 h-4 w-4 md:h-6 md:w-6"
                         checked={itemState.completed}
                         onChange={(e) => setItemState({
                             ...itemState,
