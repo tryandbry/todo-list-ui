@@ -56,10 +56,9 @@ export default function Sharebar({ show }: { show: boolean }) {
     return (
         <div className={componentClasses}>
             <div className="flex flex-row items-center group">
-                <button
-                    onClick={copyToClipboard}
-                    className="font-mono text-sm text-slate-700 mr-1 outline-none w-full border rounded-md py-0.5 px-3 select-all truncate cursor-pointer"
-                >{listLink}</button>
+                <p
+                    className="font-mono text-sm text-slate-700 mr-1 outline-none w-full border rounded-md py-0.5 px-3 select-all truncate"
+                >{listLink}</p>
                 {/* <!-- Tooltip text --> */}
                 <span className={copiedTooltipClasses}>
                     Copied!
