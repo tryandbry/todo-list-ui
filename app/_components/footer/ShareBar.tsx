@@ -54,9 +54,10 @@ export default function Sharebar({ show }: { show: boolean }) {
     }, [])
 
     return (
-        <div className={componentClasses}>
+        <div id="share-bar" className={componentClasses}>
             <div className="flex flex-row items-center group">
                 <p
+                    id="list-link"
                     className="font-mono text-sm text-slate-700 mr-1 outline-none w-full border rounded-md py-0.5 px-3 select-all truncate"
                 >{listLink}</p>
                 {/* <!-- Tooltip text --> */}
