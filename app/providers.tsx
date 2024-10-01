@@ -45,7 +45,7 @@ export default function Providers({
     return (
         <QueryClientProvider client={queryClient}>
             <IsLoadingContextProvider>
-                <ListIdContextProvider>
+                <ListIdContextProvider value={null}>
                     <ListContextProvider>
                         <ItemsContextProvider>
                             {children}

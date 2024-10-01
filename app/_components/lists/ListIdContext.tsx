@@ -11,13 +11,23 @@ export const useListIdContext = () => useContext(ListIdContext)
 
 export const ListIdContextProvider = ({
     children,
+    value,
 }: {
-   children: React.ReactNode
+   children: React.ReactNode,
+   value: ReturnType<typeof useListId> | null,
 }) => {
     const { listId, setListId } = useListId() 
 
+    if (!value) {
+        return (
+            <ListIdContext.Provider value={{ listId, setListId }}>
+                {children}
+            </ListIdContext.Provider>
+        )
+    }
+
     return (
-        <ListIdContext.Provider value={{ listId, setListId }}>
+        <ListIdContext.Provider value={value}>
             {children}
         </ListIdContext.Provider>
     )
